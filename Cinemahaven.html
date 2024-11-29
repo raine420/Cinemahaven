@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cinehaven</title>
+    <link rel="stylesheet" href="practice2.css">
+    <style>
+       {
+            font-family: Arial, sans-serif;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #FFA500;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #45a049;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: white;
+        }
+
+        header {
+            background: linear-gradient(45deg, #FF6F00, #FF9100);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 50px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #575757;
+        }
+
+        .movie-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .movie-card {
+            background-color: #333;
+            position: relative;
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .movie-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .movie-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .movie-card .overlay h2 {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .movie-card .overlay p {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .genre-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #FF9100;
+            padding: 5px 10px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .watch-link {
+            margin-top: 15px;
+            text-align: center;
+            background-color: #FF6F00;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .watch-link:hover {
+            background-color: #FF9100;
+footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #141414;
+            color: white;
+        }
+
+        /* Add orange color to the text in the home section */
+        #home h2, #home p {
+            color: #FF9100; /* Orange color */
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>CINEHAVEN</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>            
+                <li class="dropdown">
+                    <a href="#">Genres</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="filterMovies('all')">All</a>
+                        <a href="#" onclick="filterMovies('action')">Action</a>
+                        <a href="#" onclick="filterMovies('comedy')">Comedy</a>
+                        <a href="#" onclick="filterMovies('horror')">Horror</a>
+                        <a href="#" onclick="filterMovies('sci-fi')">Sci-fi</a>
+                        <a href="#" onclick="filterMovies('romance')">Romance</a>
+                        <a href="#" onclick="filterMovies('animation')">Animation</a>
+                    </div>
+                </li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Welcome to Cinehaven</h2>
+        <p>Your favorite movie destination. Explore genres, discover movies, and more!</p>
+    <!-- Search Bar Section -->
+    <div class="search-container">
+        <input type="text" id="search-bar" class="search-box" placeholder="Search for movies..." oninput="searchMovie()">
+        <button class="search-button">Search</button>
+    </div>
+
+    <script>
+        function searchMovie() {
+            var query = document.getElementById("search-bar").value.toLowerCase();
+            var movies = document.querySelectorAll('.movie-card');
+            
+            movies.forEach(function(movie) {
+                var title = movie.querySelector('.overlay h2').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    movie.style.display = 'block'; // Show movie if it matches
+                } else {
+                    movie.style.display = 'none'; // Hide movie if it doesn't match    
+                }
+            });
+        }
+    </script>  
+    </section>
+
+    <section class="featured-movies" id="features">
+        <h2>Featured Movies</h2>
+        <div class="movie-list">
+            <div class="movie-card action">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://m.media-amazon.com/images/M/MV5BZDMyYWU4NzItZDY0MC00ODE2LTkyYTMtMzNkNDdmYmFhZDg0XkEyXkFqcGc@._V1_.jpg" alt="Venom: The Last Dance"></a>
+                <div class="overlay">
+                    <h2>VENOM: THE LAST DANCE</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐⭐</p>
+                    <p>Venom: The Last Dance follows Eddie Brock (Tom Hardy) as he and his symbiote, Venom, face their toughest challenge yet. A new and powerful symbiote named Carnage threatens to destroy everything they hold dear. With their uneasy alliance pushed to the breaking point, Eddie and Venom must confront their past, battle new enemies, and decide if they can continue their partnership or if this will be their final showdown. It's a high-stakes action film filled with intense battles, emotional moments, and a thrilling conclusion.
+
+</p>
+                    <a href="Venom.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Action</div>
+            </div>
+            <div class="movie-card romance">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQZq3vj0DyzoWJQqnnSn6_0BsZRcxHjTFKZeUXj_B_vSXCVCjNFNB-8Sg&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>UN HAPPY FOR YOU</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Unhappy For You is a romantic drama about a woman who, while in a relationship, finds herself questioning her happiness. As she forms a connection with someone new, she must face tough decisions about love and what truly makes her happy.</p>
+                    <a href="happy.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Romances</div>
+            </div>
+            <div class="movie-card horror">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl_FubmZ5V1v8WAFmrsT2QXQiRrBbHuFTz0jJar_xcStyvGBiwPT01Xmvs&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>FROM</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>From (Season 1) is a supernatural horror series set in a small town where residents are trapped and unable to leave. As strange and terrifying creatures emerge at night, the townspeople must work together to survive. The show mixes mystery and horror, exploring the dark secrets of the town and the horrors that lurk within. With an eerie atmosphere, From delves into themes of survival, fear, and the unknown.</p>
+                    <a href="from.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Horror</div>
+            </div>
+            <div class="movie-card action">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/en/6/66/Transformers07.jpg" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>TRANSFORMER: THEIR WAR. OUR WORLD</h2>
+                    <p>Release Date: 2007</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Transformers is an action-packed movie about a war between giant robots called Autobots and Decepticons, who can transform into vehicles. The Autobots, led by Optimus Prime, must protect Earth from the evil Decepticons, led by Megatron, while humans get caught in the battle.
+
+</p>
+                    <a href="trans.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Action</div>
+            </div>
+            <div class="movie-card horror">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHVWHmRFlj3hYRPSfaAVmtSHYw2qi7pd1Bx6v1VJ4FOIcBLRdcWzhhrDg&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>WORLD WAR Z</h2>
+                    <p>Release Date: 2013</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>World War Z is a 2013 movie about a global zombie outbreak. Brad Pitt plays Gerry Lane, a former investigator trying to find the source of the virus and stop it before humanity is wiped out. The movie shows fast-moving zombies and the chaos caused by the pandemic.</p>
+                    <a href="world.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Horror</div>
+            </div>
+            <div class="movie-card sci-fi">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeqD7l_4iOWKFvq3vfWalWtJeJXAf6vGt4k1KMJ5HqU0rujFFeJtWiXUs&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>RESIDENT EVIL: EXTINCTION</h2>
+                    <p>Release Date: 2007</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Resident Evil: Extinction is a 2007 action-horror movie. It follows Alice, played by Milla Jovovich, as she travels through a desert wasteland after a global outbreak of the T-virus has turned most people into zombies. Alice teams up with survivors as they try to escape the infected world and find safety while battling the evil Umbrella Corporation. The movie is filled with action, zombies, and intense survival moments.</p>
+                    <a href="resident.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Sci-Fi</div>
+            </div>
+            <div class="movie-card horror">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdbXLtpf0dZyDCeZOKmbygEaiAKEcXManfow&s" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>IT</h2>
+                    <p>Release Date: 2017</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>IT is a 2017 horror movie based on Stephen King's novel. The story is set in the town of Derry, where a group of kids, known as "The Losers Club," face their worst fears when a shape-shifting entity, known as "Pennywise the Dancing Clown," begins to terrorize the town. Pennywise feeds on the fear of children, and the Losers Club must work together to defeat it. The movie mixes creepy moments with themes of friendship and courage.
+
+
+
+</p>
+                    <a href="it.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Horror</div>
+            </div>
+            <div class="movie-card action">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://m.media-amazon.com/images/M/MV5BNmQxNjZlZTctMWJiMC00NGMxLWJjNTctNTFiNjA1Njk3ZDQ5XkEyXkFqcGc@._V1_.jpg" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>AVATAR</h2>
+                    <p>Release Date: 2022</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Avatar: The Way of Water is a 2022 science fiction film and the sequel to *Avatar* (2009). The story follows Jake Sully and Neytiri, who now have a family and live peacefully on Pandora. When humans return to the planet to exploit its resources, the family must leave their home and seek refuge with the water-dwelling Metkayina tribe. The movie explores themes of family, survival, and environmental protection, with stunning visuals and groundbreaking underwater scenes.</p>
+                    <a href="avatar.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">action</div>
+                </div>
+            <div class="movie-card sci-fi">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2GNPwO2XLc3f39UbylvaP4Px7d0rxe4YJ0jUn2a-P05PjD_FpsNxtl0I&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>THE MAZE RUNNER</h2>
+                    <p>Release Date: 2014</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>The Maze Runner is a 2014 sci-fi action movie based on the novel by James Dashner. It follows a teenage boy, Thomas, who wakes up in a mysterious maze with no memory of his past, along with other boys who are also trapped. They must work together to escape the maze, which is filled with dangerous creatures and ever-changing pathways. As they uncover the truth about their situation, they face challenges and fight for their survival.</p>
+                    <a href="maze.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Sci-Fi</div>
+            </div>
+            <div class="movie-card action">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-0DZX6g4G_j3EXANUFptPHXwlwexbdchIx6CC9cb9BUve_N2QuO8bMB8&s=10" alt="Un Happy For You"></a>
+      12         <div class="overlay">
+                    <h2>JOHN WICK: CHAPTER 3</h2>
+                    <p>Release Date: 2023</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>John Wick: Chapter 4 (2023) continues the story of John Wick, played by Keanu Reeves. After surviving the events of the previous films, John is still on the run and seeking revenge against the High Table, a powerful criminal organization. The movie follows his journey to challenge the system and fight for his freedom, while facing new enemies and allies across the globe. With intense action, breathtaking choreography, and world-building, the film further expands the universe of John Wick, making it a thrilling and emotional chapter in the saga.</p>
+                    <a href="john.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Action</div>
+            </div>
+            <div class="movie-card romance">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOJFugHlfvnjTObXczJF3wNK2KJY3-o6eClQMAJhkmq3Y080-HX2twNGQ&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>THE KIND OF LOVE</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>The Kind of Love (2024) is a Filipino romantic drama starring Barbie Forteza. The movie is about a young woman who faces challenges in love and learns about herself along the way. It explores themes of love, heartache, and personal growth.</p>
+                    <a href="that.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Romance</div>
+            </div>
+            <div class="movie-card romance">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs4UTR3K7ALtd7gJlRT5PNNuoU7lDAt37qxcOD3m8mcLNmlzljJVvGeP3A&s=10" alt="Un Happy For You"></a>
+href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs4UTR3K7ALtd7gJlRT5PNNuoU7lDAt37qxcOD3m8mcLNmlzljJVvGeP3A&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>MEN QC WOMEN ALABANG</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Men Are from Quezon City, Women Are from Alabang is a 2024 Filipino romantic comedy. It tells the story of two people from different backgrounds—one from Quezon City and the other from Alabang—and how their differences create funny situations as they fall in love.</p>
+                    <a href="men.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">romance</div>
+            </div>
+            <div class="movie-card horror">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk4lx2pZ_BDQix_a7h1gH0uQ4Odq1liaYspeQ0q2Mda1tccpScgp6BwOs&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>END TIMES</h2>
+                    <p>Release Date: 2023</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>End Times: Judgment Has Come (2023) is a Christian-themed movie about the world facing the end of days. It focuses on people dealing with the consequences of sin and preparing for God's judgment, as described in the Bible. The film highlights themes of faith, redemption, and good versus evil.</p>
+                    <a href="end.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Horror</div>
+            </div>
+            <div class="movie-card sci-fi">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPA3aDm_eEyLDYKmDoCvDxWwZyvyvtFShGEQIJpMG8NKRNpysvjINTLnHa&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>INTERSTELLAR</h2>
+                    <p>Release Date: 2014</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Interstellar (2014) is a sci-fi film directed by Christopher Nolan. It follows a group of astronauts, led by Cooper (played by Matthew McConaughey), who travel through a wormhole to find a new home for humanity as Earth faces environmental collapse. The film explores themes of time, space, love, and survival, with stunning visuals and a complex storyline that mixes science and emotion. As Cooper faces impossible choices, the movie highlights the power of human connection and the mysteries of the universe.</p>
+                    <a href="ins.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Sci-fi</div>
+            </div>
+            <div class="movie-card action">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRESNSSF885uW4XEs7NaWHOb3P0VEHIIMKVfA&s" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>WHITEOUT</h2>
+                    <p>Release Date: 2023</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Whiteout (2023) is a thriller film that takes place in Antarctica, focusing on a U.S. Marshal named Carrie Stetko, who is assigned to investigate a murder at a remote research station. As a deadly storm approaches, she uncovers a dangerous conspiracy tied to the past. The movie blends mystery, suspense, and survival elements, all set in the harsh and isolating environment of the frozen continent. It combines a race against time with the chilling atmosphere of Antarctica, adding intensity to the thriller genre.</p>
+                    <a href="white.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Action</div>
+            </div>
+            <div class="movie-card horror">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://m.media-amazon.com/images/M/MV5BNzdiNDY0NTAtMDc1Ni00YWQzLTkwZTUtMzIzMDFmMmJjOTk0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>NOKTURNO</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Nokturno (2024) is a Filipino drama film starring Nadine Lustre. The movie revolves around a woman grappling with loss, grief, and personal struggles. Set against a backdrop of a night-time narrative, it delves into themes of healing, emotional pain, and the complexity of relationships. Nadine Lustre's performance is central to the story, portraying a character navigating dark, personal challenges while searching for peace and resolution. The film is expected to explore the depth of human emotions with a powerful, evocative storyline.</p>
+                    <a href="nok.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Horror</div>
+            </div>
+            <div class="movie-card romance">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxAjGK54fAGkOI0p006YqAjpx_qIiuShHZdG12GnNx7adQA5WrUNgHwcWo&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>WHAT IF</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>What If (2024) is a Filipino romantic drama film starring Alessandra de Rossi and JM de Guzman. The movie explores themes of love, choices, and second chances. It follows the story of two individuals whose paths cross, leading them to question their past decisions and imagine what could have been. As they navigate their relationship, the film delves into emotional and personal growth, highlighting the complexity of love and the impact of choices in shaping their lives.</p>
+                    <a href="if.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">romance</div>
+            </div>
+            <div class="movie-card sci-fi">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2IDYKEvRDzvvkMDTkM6F5sJrbjK75tnK2l7m4iHLmA_ij9FbNeRyV67-s&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>LUNAMANCER</h2>
+                    <p>Release Date: 2021</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Lunamancer (2021) is a Filipino fantasy-action film directed by Jason Paul Laxamana. The movie centers on a character named Luna, a young woman with special abilities, including the power to control the moon's energy. She embarks on a journey to discover the truth behind her powers and to protect her loved ones from dark forces seeking to exploit her gifts. The film blends elements of fantasy, action, and adventure while exploring themes of self-discovery, destiny, and the responsibility that comes with power.</p>
+                    <a href="luna.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Sci-Fi</div>
+            </div>
+            <div class="movie-card comedy">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJigc2OREHkjO1Qc7jSnoSo5XbdzwC4fMLp90TyG_BqJLCuFfcPMBfGew&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>RED ONE</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Red One is an upcoming action-comedy film, set to be released in 2024. The movie stars Dwayne "The Rock" Johnson and Chris Evans. It is directed by Jake Kasdan and produced by Amazon Studios. The film blends holiday themes with action and adventure, following a story that involves a secret world of Christmas-themed heroes and villains. Johnson plays a key character, and the film is expected to have a mix of humor, action, and festive spirit.</p>
+                    <a href="red.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Comedy</div>
+            </div>
+            <div class="movie-card romance">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUPAwvjLS6b40z8axvWAi-CnlAGn-1Vb_Z-SCLYy4XLYAXNKiJvPswKiI&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>WILL YOU BE MY EX</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Will You Be My Ex? (2024), a Filipino romantic drama film starring Julia Barretto. The movie revolves around a couple dealing with the complexities of love and relationships, particularly after breaking up. The storyline explores themes of moving on, forgiveness, and whether it's possible to rekindle a past romance. Julia Barretto's character navigates emotional challenges while confronting her past and future choices in love.</p>
+                    <a href="will.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">romance</div>
+            </div>
+            <div class="movie-card comedy">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0qjVzHjK9wXg3JEtzLSK-_ip3ICtHZSFefvk5ycDj6v3HiSt7vqLTqmi0&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+<h2>SPIRITED</h2>
+                    <p>Release Date: 2022</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Spirited is a 2022 Apple Original Film, a musical comedy that reimagines the classic holiday tale of *A Christmas Carol*. The film stars Will Ferrell as the Ghost of Christmas Present and Ryan Reynolds as a cynical businessman named Clint Briggs. The story follows Clint, who is visited by the Ghost of Christmas Present, as he is shown the errors of his ways. The film mixes humor, heart, and festive songs in a modern take on Charles Dickens classic, blending comedy with holiday spirit. It's a fun, musical twist on the traditional redemption story.</p>
+                    <a href="sprit.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Comedy</div>
+            </div>
+            <div class="movie-card comedy">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://m.media-amazon.com/images/M/MV5BNzNmNmQ2ZDEtMTc1MS00NjNiLThlMGUtZmQxNTg1Nzg5NWMzXkEyXkFqcGc@._V1_.jpg" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>HOME ALONE</h2>
+                    <p>Release Date: 1990</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Home Alone is a classic 1990 holiday comedy film directed by Chris Columbus. It follows the story of an 8-year-old boy, Kevin McCallister (played by Macaulay Culkin), who is accidentally left behind when his family goes on a Christmas vacation to Paris. Kevin must defend his home from two bumbling burglars, Harry and Marv, using a variety of clever and humorous traps. The film is beloved for its heartwarming themes of family, clever antics, and Kevin's journey from being an overlooked child to a resourceful hero. It's a holiday favorite for many.</p>
+                    <a href="home.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Comedy</div>
+            </div>
+            <div class="movie-card sci-fi">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjvOkV5RqwOdrJRH2oQqsl5ULIDws_FDKKqANuoimTyv9lPvlFnZ7p0Qw&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>JURASSIC TRIANGLE</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>A group of colleagues crash land on a mysterious island that they cannot escape. They discover they are not alone when they encounter an array of blood thirsty creatures and dinosaurs out to get them. Will they survive the island?</p>
+                    <a href="jura.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">sci-fi</div>
+            </div>
+            <div class="movie-card animation">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUa78odQlhyrL_oXzHVO5xpDHi6Irx1HKVRzqMWLV8EQZzPFo4m9rJjuE&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>HOW TO TRAIN YOUR DRAGON: THE HIDDEN WORLD</h2>
+                    <p>Release Date: 2019</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>How to Train Your Dragon: The Hidden World* is the third and final installment in the How to Train Your Dragon series, released in 2019. Directed by Dean DeBlois, the film follows Hiccup and Toothless as they continue their adventures in Berk. Hiccup, now the leader of his village, strives to create a peaceful world where both humans and dragons can live together. Meanwhile, Toothless encounters a female dragon, leading to a journey that tests their friendship. The film explores themes of growing up, leadership, and letting go, with stunning visuals and an emotional conclusion to the series.</p>
+                    <a href="dragon.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Animation</div>
+            </div>
+            <div class="movie-card comedy">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTzAfmuQUABVyE32Tc0LXA3Ne9VqdBwpOwMWHNNfcMRnGLpPRhiXUqsSGD&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>DEAR SANTA</h2>
+                    <p>Release Date: 2024</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Dear Santa is a 2024 American Christmas comedy film directed by Bobby Farrelly, and starring Jack Black, Keegan-Michael Key and Ben Stiller.</p>
+                    <a href="dear.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Comedy</div>
+            </div>
+            <div class="movie-card animation">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4dNRm_tiD8i6tRzoxLZWrPWbOcxt08CcC3vO94IxBuNauXRWh6ZcWEl2u&s=10" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>FINDING NEMO</h2>
+                    <p>Release Date: 2003</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Finding Nemo is a 2003 animated film produced by Pixar Animation Studios and released by Walt Disney Pictures. The story follows Marlin, a clownfish, who embarks on a journey across the ocean to find his son, Nemo, who was captured by a diver and placed in a fish tank. Along the way, Marlin is joined by Dory, a forgetful but kind fish, as they encounter various ocean creatures and face numerous challenges. The film is known for its heartwarming themes of family, friendship, and perseverance, along with its stunning animation. It became a huge box office success and won several awards, including an Academy Award for Best Animated Feature.</p>
+                    <a href="nemo.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Animation</div>
+            </div>
+            <div class="movie-card animation">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmD0FjlA3cO-3eFKXWotSaGlDyGJMSOhuKQA&s" alt="Un Happy For You"></a>
+                <div class="overlay">
+                    <h2>THE PENGUIN OF THE MADAGASCAR</h2>
+                    <p>Release Date: 2014</p>
+                    <p>Rating: ⭐⭐⭐</p>
+                    <p>Penguins of Madagascar is a 2014 animated action-comedy film and a spin-off of the *Madagascar* franchise. The film focuses on the four penguin characters—Skipper, Kowalski, Rico, and Private—who are known for their mischievous and secret-agent antics in the *Madagascar* films. In this movie, the penguins team up with a high-tech organization called the North Wind to stop the evil octopus, Dr. Octavius Brine, from taking over the world. The film features the penguins' usual witty humor and action-packed adventures, making it a fun and family-friendly movie.</p>
+                    <a href="penguin.mp4" class="watch-link" target="_blank">Click here to watch</a>
+                </div>
+                <div class="genre-tag">Animation</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy;Cinehaven 2024</p>
+    </footer>
+
+    <script>
+        function filterMovies(genre) {
+            const movieCards = document.querySelectorAll('.movie-card');
+            if (genre === 'all') {
+                movieCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                movieCards.forEach(card => {
+                    if (!card.classList.contains(genre)) {
+                        card.style.display = 'none';
+                    } else {
+                        card.style.display = 'block';
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
